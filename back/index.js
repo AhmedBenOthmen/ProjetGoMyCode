@@ -6,6 +6,8 @@ const cors = require("cors");
 const bodyParser= require("body-parser");
 const cookieParser = require('cookie-parser')
 const jobRoute = require('./routes/job.js')
+const userRoute = require('./routes/user.js')
+const authRoute = require('./routes/auth.js')
 
 
 dotenv.config();
@@ -28,6 +30,9 @@ mongosse.connect(`${server}/${DB}` , {useNewUrlParser:true, useUnifiedTopology:t
 
 
 app.use('/job',jobRoute)
+app.use('/user',userRoute)
+app.use('/auth',authRoute)
+
 
 
 

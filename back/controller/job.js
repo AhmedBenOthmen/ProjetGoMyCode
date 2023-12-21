@@ -69,7 +69,7 @@ exports.updateJob = async (req, res) => {
             payload: data,
         });
     } catch (error) {
-        console.error(error);  // Use console.error for error logging
+        console.error(error);
         res.status(500).json({
             message: "Error in Updating Job",
         });
