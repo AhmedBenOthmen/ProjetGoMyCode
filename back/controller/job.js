@@ -97,3 +97,27 @@ exports.deleteJob = async (req,res)=>{
         })
     }
 }
+
+exports.getOneJob = async(req,res)=>{
+    try {
+        const job = await Job.findOne({_id:req.params.id , isActive:true})
+        let data
+        if (job) {
+            data = job
+        }else {
+            data = "No job found"
+        }
+    
+        return res.status(200).json({
+            payload:data
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message:"Error IN getOneJob"
+        })
+    }
+    }
+
+
+

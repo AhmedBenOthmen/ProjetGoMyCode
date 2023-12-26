@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser')
 const jobRoute = require('./routes/job.js')
 const userRoute = require('./routes/user.js')
 const authRoute = require('./routes/auth.js')
-
+const commentRoute = require('./routes/comment.js')
 
 dotenv.config();
 const app = express();
@@ -32,7 +32,7 @@ mongosse.connect(`${server}/${DB}` , {useNewUrlParser:true, useUnifiedTopology:t
 app.use('/job',jobRoute)
 app.use('/user',userRoute)
 app.use('/auth',authRoute)
-
+app.use('/comment',commentRoute)
 
 
 
