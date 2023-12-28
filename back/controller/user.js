@@ -69,3 +69,25 @@ exports.getOneUser = async(req,res)=>{
             });
         }
     };
+
+    exports.deleteUser = async (req,res)=>{
+        try {
+            const user = await User.findOneAndUpdate({ _id: req.params.id }, { isActive: false })
+            let data
+            if (user) {
+                data = "User  Deleted"
+            } else {
+                data = "No User Found"
+            }
+    
+            return res.status(200).json({
+                payload: data
+            })
+    
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({
+                message:"Error in deleting User"
+            })
+        }
+    }

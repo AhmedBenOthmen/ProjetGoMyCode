@@ -1,1 +1,16 @@
-add getOneJob
+21-12:
+auth done
+simple CRUD job done
+
+
+22-12:
+
+getOneJob done
+deleteUser done
+userValidator done
+
+24-12
+comments CRUD done
+
+
+

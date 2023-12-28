@@ -3,9 +3,22 @@ const Schema = mongoose.Schema;
 
 
 const commentSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    text: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now },
+    user: { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'User' 
+    },
+    text: { 
+      type: String, 
+      required: true 
+    },
+    createdAt: { 
+      type: Date, 
+      default: Date.now 
+    },
+    isActive:{
+      type:Boolean,
+      default:true
+  }
   });
   
   module.exports=mongoose.model('Comment',commentSchema);
