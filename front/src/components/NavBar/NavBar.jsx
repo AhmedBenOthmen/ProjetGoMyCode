@@ -5,8 +5,22 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import NavBarLogo from '../../assets/images/jobhub-high-resolution-logo-transparent.png'
+import { useSelector, useDispatch } from "react-redux";
+import { logout,reset } from "../../Redux/auth/authSlice.js";
+import { useNavigate } from "react-router-dom";
+
 
 function NavBar() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const {user} = useSelector((state)=>state.auth)
+
+  const onLogout = ()=>{
+    dispatch(logout())
+    dispatch(reset())
+    navigate('/login')
+  }
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
@@ -32,7 +46,10 @@ function NavBar() {
               className="me-2"
               aria-label="Search"
             />
-            <Button variant="outline-success">Search</Button>
+            
+            <Button onClick={() => onLogout()} variant="outline-success">Search</Button>
+            <button onClick={onLogout}>logout</button>
+           
           </Form>
         </Navbar.Collapse>
       </Container>

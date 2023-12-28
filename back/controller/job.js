@@ -1,4 +1,5 @@
 const Job = require('../models/job.js')
+const mongoose = require('mongoose');
 
 
 exports.getAllJobs = async (req, res) => {
@@ -37,22 +38,45 @@ exports.getAllJobs = async (req, res) => {
 };
 
 
-exports.createJob = async (req,res) => {
-    const {title, description, company, location} = req.body;
+exports.createJob = async (req, res) => {
+    const { title, description, company, location, postedBy } = req.body;
+  
     try {
-        const newJob = new Job(req.body)
-        await newJob.save();
-        return res.status(201).json({
-            payload:newJob
-        })
-        
+      if (!title || !description || !company || !location || !postedBy) {
+        return res.status(400).json({
+          payload: 'Missing required fields',
+        });
+      }
+  
+      // Convert the postedBy to ObjectId
+      const validObjectId = mongoose.Types.ObjectId.isValid(postedBy);
+      if (!validObjectId) {
+        return res.status(400).json({
+          payload: 'Invalid user ID',
+        });
+      }
+  
+      const newJob = new Job({
+        title,
+        description,
+        company,
+        location,
+        postedBy: mongoose.Types.ObjectId.createFromHexString(postedBy),
+      });
+  
+      await newJob.save();
+  
+      return res.status(201).json({
+        payload: newJob,
+      });
     } catch (error) {
-        console.log(error)
-        return res.status(500).json({
-            payload:"Error adding a Job"
-        })
+      console.error(error);
+      return res.status(500).json({
+        payload: 'Error adding a Job',
+        error: error.message,
+      });
     }
-}
+  };
 
 exports.updateJob = async (req, res) => {
     try {
