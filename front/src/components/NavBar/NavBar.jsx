@@ -38,6 +38,7 @@ function NavBar() {
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/profile">Profile</Nav.Link>
             <Nav.Link href="/myjobs">My Jobs</Nav.Link>
+            <Nav.Link href="/admin">Admin Tab</Nav.Link>
           </Nav>
           <Form className="d-flex">
             <Form.Control
