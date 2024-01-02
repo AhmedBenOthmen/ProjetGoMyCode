@@ -7,6 +7,7 @@ import MyJobs from './components/Pages/MyJobs.jsx';
 import Profile from './components/Pages/Profile.jsx'
 import Register from './components/Pages/Register.jsx';
 import Login from './components/Pages/Login.jsx';
+import Admin from './components/Pages/Admin.jsx';
 
 function PrivateRoute({ children }) {
  const token = localStorage.getItem('token');
@@ -27,6 +28,7 @@ function App() {
         <Route path='/profile' element={<PrivateRoute><Profile/></PrivateRoute>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
+        <Route path='/admin' element={<Admin/>}/>
         
       </Routes>
       
