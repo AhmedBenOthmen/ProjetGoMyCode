@@ -17,7 +17,7 @@ exports.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ username, email, password: hashedPassword });
     await user.save();
-    const token = jwt.sign({ userId: user._id }, "your_secrete_key", {
+    const token = jwt.sign({ userId: user._id }, process.env.KEY, {
       expiresIn: "1h",
     });
     res.cookie("token", token, {
@@ -25,6 +25,7 @@ exports.register = async (req, res) => {
       secure: true,
       maxAge: 3600000,
     }); // maxAge en milisecondes = 1h
+    res.setHeader('Authorization', token); // maxAge en millisecondes = 1h
     return res.status(201).json({
       payload: user,
       token,
@@ -55,14 +56,15 @@ exports.login = async (req, res) => {
       });
     }
 
-    const token = jwt.sign({ userId: user._id }, "your_secrete_key", {
+    const token = jwt.sign({ userId: user._id }, process.env.KEY, {
       expiresIn: "1h",
     });
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
       maxAge: 3600000,
-    }); // maxAge en milisecondes = 1h
+    });
+    res.setHeader('Authorization', token); // maxAge en millisecondes = 1h
     return res.status(200).json({
       payload: user,
       token,

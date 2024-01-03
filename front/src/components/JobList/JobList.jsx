@@ -1,35 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import Job from '../Job/Job.jsx';
-import api from '../../Services/api.js';
+import useJobList from './useJobList.js';
 import './JobList.css'
 
 function JobList() {
-  const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    api.get('/job/get')
-      .then(response => {
-        console.log('Fetched jobs successfully:', response.data);
-        setJobs(response.data.payload);
-      })
-      .catch(error => {
-        console.error('Error fetching jobs:', error);
-        setError(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
+  const { jobs, loading, error, handleRefresh } = useJobList();
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p>Loading...</p>; // Consider a more visually appealing loading indicator
   }
 
   if (error) {
-    return <p>Error: {error.message}</p>;
+    return (
+      <div>
+        <p>Error: {error}</p>
+        <button onClick={handleRefresh}>Retry</button>
+      </div>
+    );
   }
 
   return (
