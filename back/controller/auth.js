@@ -23,8 +23,8 @@ exports.register = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      maxAge: 3600000,
-    }); // maxAge en milisecondes = 1h
+      maxAge: 24 * 60 * 60 * 1000,
+    }); // maxAge en milisecondes = 1 Day
     res.setHeader('Authorization', token); // maxAge en millisecondes = 1h
     return res.status(201).json({
       payload: user,

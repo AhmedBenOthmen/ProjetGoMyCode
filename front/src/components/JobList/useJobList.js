@@ -27,7 +27,7 @@ function useJobList() {
   
     useEffect(() => {
       fetchJobs();
-    }, []); // Fetch jobs on component mount
+    }, []);
   
     const handleRefresh = () => {
       fetchJobs();
