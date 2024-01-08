@@ -18,8 +18,9 @@ function JobList() {
       </div>
     );
   }
+if(!jobs.length ) return <h1>NO JOBS FOUND</h1>
 
-  return (
+ if(jobs.length) return (
     <div className='JobList'>
       {jobs.map(job => (
         <Job key={job._id} job={job} />

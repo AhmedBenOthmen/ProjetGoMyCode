@@ -23,7 +23,7 @@ exports.getAllJobs = async (req, res) => {
 
         const jobs = await Job.find(query);
 
-        let data = (jobs && jobs.length) ? jobs : "No Jobs found";
+        let data =  jobs ;
 
         return res.status(200).json({
             payload: data

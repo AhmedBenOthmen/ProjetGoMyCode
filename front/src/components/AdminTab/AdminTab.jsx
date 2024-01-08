@@ -44,14 +44,20 @@ function a11yProps(index) {
 }
 
 export default function BasicTabs() {
+  
   const [value, setValue] = React.useState(0);
-  const { jobs, loading, error, handleRefresh } = useJobList();
-
+  const { jobs, setJobs, loading, error, handleRefresh } = useJobList();
+  console.log("jobs", jobs)
+  
+  const handleDelete = (deletedJobId) => {
+    // Update state by filtering out the deleted job
+    setJobs((prevJobs) => prevJobs.filter((job) => job._id !== deletedJobId));
+  };
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  return (
+  if(!jobs.length ) return <h1>NO JOBS FOUND</h1>
+ if (jobs.length)return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
@@ -68,7 +74,7 @@ export default function BasicTabs() {
         ) : (
           <div>
             {jobs.map(job => (
-              <AdminJob key={job._id} job={job} />
+              <AdminJob key={job._id} job={job} onDelete={handleDelete} />
             ))}
           </div>
         )}

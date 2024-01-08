@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import api from '../../Services/api.js';
 
 function useJobList() {
+
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -35,6 +36,7 @@ function useJobList() {
   
     return {
       jobs,
+      setJobs,
       loading,
       error,
       handleRefresh,

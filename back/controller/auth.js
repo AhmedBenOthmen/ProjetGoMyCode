@@ -1,6 +1,9 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const dotenv =require("dotenv");
+const AuthHelper = require('../helpers/AuthHelper.js')
+dotenv.config();
 
 exports.register = async (req, res) => {
   try {
@@ -18,7 +21,7 @@ exports.register = async (req, res) => {
     const user = new User({ username, email, password: hashedPassword });
     await user.save();
     const token = jwt.sign({ userId: user._id }, process.env.KEY, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
     res.cookie("token", token, {
       httpOnly: true,
@@ -55,20 +58,59 @@ exports.login = async (req, res) => {
         payload: "Email Or Password incorrect",
       });
     }
+    const generateAuth = AuthHelper.generateTokens(user._id) 
+    let token = generateAuth.accessToken
+    console.log('accessToken' ,token)
+    const verifAccesToken = AuthHelper.verifyAccessToken(token)
+    console.log('verifAccesToken' ,verifAccesToken)
 
-    const token = jwt.sign({ userId: user._id }, process.env.KEY, {
-      expiresIn: "1h",
-    });
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      maxAge: 3600000,
-    });
-    res.setHeader('Authorization', token); // maxAge en millisecondes = 1h
-    return res.status(200).json({
-      payload: user,
-      token,
-    });
+    if (verifAccesToken) {
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        maxAge: 3600000,
+      });
+      res.cookie("refreshToken", token, {
+        httpOnly: true,
+        secure: true,
+        maxAge: 3600000,
+      });
+      res.setHeader('Authorization', token);
+      return res.status(200).json({
+        payload: user,
+        token,
+      });
+    } else {
+      token = generateAuth.refreshToken
+      const verifRefreshToken = AuthHelper.verifRefreshToken(token)
+      if (verifRefreshToken) {
+        res.cookie("token", token, {
+          httpOnly: true,
+          secure: true,
+          maxAge: 3600000,
+        });
+        res.setHeader('Authorization', token); // maxAge en millisecondes = 1h
+        return res.status(200).json({
+          payload: user,
+          token,
+        });
+      } else {
+        const regenerRefreshToken = AuthHelper.generateTokens(user._id)
+        token =regenerRefreshToken.accessToken;
+        res.cookie("token", token, {
+          httpOnly: true,
+          secure: true,
+          maxAge: 3600000,
+        });
+        res.setHeader('Authorization', token); // maxAge en millisecondes = 1h
+        return res.status(200).json({
+          payload: user,
+          token,
+        });
+      }
+
+    }
+ 
   } catch (error) {
     console.log(error);
     return res.status(500).json({
