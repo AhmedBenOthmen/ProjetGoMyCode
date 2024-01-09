@@ -1,0 +1,26 @@
+table {
+    table-layout: fixed;
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  
+  td {
+    border: 1px solid black !important;
+    width: 14.28%; 
+    text-align: center; 
+    padding: 8px; 
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; 
+  }
+  
+  #deleteIcon {
+    max-height: 40px;
+    max-width: 40px;
+  }
+
+  #adminIcon{
+    max-height: 40px;
+    max-width: 40px;
+  
+  }

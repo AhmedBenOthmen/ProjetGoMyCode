@@ -6,6 +6,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import AdminJob from '../AdminJob/AdminJob.jsx';
 import useJobList from '../JobList/useJobList.js';
+import AdminUser from '../AdminUser/AdminUser.jsx';
+import { useState } from 'react';
+import useAdminUser from '../AdminUser/useAdminUser.js';
 
 
 
@@ -45,14 +48,22 @@ function a11yProps(index) {
 
 export default function BasicTabs() {
   
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   const { jobs, setJobs, loading, error, handleRefresh } = useJobList();
-  console.log("jobs", jobs)
+  const { users,setUsers, loadingUsers, errorUsers } = useAdminUser();
+
+
   
   const handleDelete = (deletedJobId) => {
     // Update state by filtering out the deleted job
     setJobs((prevJobs) => prevJobs.filter((job) => job._id !== deletedJobId));
   };
+
+  const handleDeleteUser = (deletedUserId) => {
+    // Update state by filtering out the deleted user
+    setUsers((prevUsers) => prevUsers.filter((user) => user._id !== deletedUserId));
+  };
+  
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -81,8 +92,18 @@ export default function BasicTabs() {
         <button onClick={handleRefresh}>Refresh Jobs</button>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        All Users
-      </CustomTabPanel>
+      {loadingUsers ? (
+        <p>Loading users...</p>
+      ) : errorUsers ? (
+        <p>Error fetching users: {errorUsers}</p>
+      ) : (
+        <div>
+          {users.map(user => (
+            <AdminUser key={user._id} user={user} onDelete={handleDeleteUser} />
+          ))}
+        </div>
+      )}
+    </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         Item Three
       </CustomTabPanel>
