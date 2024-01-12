@@ -7,6 +7,14 @@ const commentSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId, 
       ref: 'User' 
     },
+    userName: { 
+      type: String, 
+      required: true 
+    },
+    job:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Job'
+    },
     text: { 
       type: String, 
       required: true 

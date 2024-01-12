@@ -1,4 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+
 import axios from "axios";
 
 const  API_URL = 'http://localhost:4000'
@@ -27,7 +27,7 @@ const login = async (userData) => {
             // Stockez le token dans localStorage pour une utilisation ultérieure
             localStorage.setItem('user', JSON.stringify(payload));
             localStorage.setItem('token', JSON.stringify(token));
-            console.log("token",token)
+            // console.log("token",token)
 
             // Configurez l'en-tête "Authorization" pour les requêtes ultérieures
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;

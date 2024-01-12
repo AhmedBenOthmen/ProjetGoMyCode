@@ -4,38 +4,37 @@ const mongoose = require('mongoose');
 
 exports.getAllJobs = async (req, res) => {
     try {
-        let query = { isActive: true };
-
-        if (req.query.title) {
-            const titleRegex = new RegExp(req.query.title, 'i');
-            query.title = titleRegex;
-        }
-
-        if (req.query.location) {
-            const locationRegex = new RegExp(req.query.location, 'i');
-            query.location = locationRegex;
-        }
-
-        if (req.query.company) {
-            const companyRegex = new RegExp(req.query.company, 'i');
-            query.company = companyRegex;
-        }
-
-        const jobs = await Job.find(query);
-
-        let data =  jobs ;
-
-        return res.status(200).json({
-            payload: data
-        });
-
+      let query = { isActive: true };
+  
+      if (req.query.title) {
+        const titleRegex = new RegExp(req.query.title, 'i');
+        query.title = titleRegex;
+      }
+  
+      if (req.query.location) {
+        const locationRegex = new RegExp(req.query.location, 'i');
+        query.location = locationRegex;
+      }
+  
+      if (req.query.company) {
+        const companyRegex = new RegExp(req.query.company, 'i');
+        query.company = companyRegex;
+      }
+  
+      const jobs = await Job.find(query);
+  
+      let data = jobs;
+  
+      return res.status(200).json({
+        payload: data
+      });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            message: "Error in getAllJobs"
-        });
+      console.error(error);
+      res.status(500).json({
+        message: "Error in getAllJobs"
+      });
     }
-};
+  };
 
 
 exports.createJob = async (req, res) => {

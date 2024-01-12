@@ -9,7 +9,6 @@ const jobRoute = require('./routes/job.js')
 const userRoute = require('./routes/user.js')
 const authRoute = require('./routes/auth.js')
 const commentRoute = require('./routes/comment.js')
-
 dotenv.config();
 const app = express();
 const server = process.env.SERVER;

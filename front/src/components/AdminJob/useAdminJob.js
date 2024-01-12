@@ -9,7 +9,7 @@ const useAdminJob = (job, onDelete) => {
       const response = await api.patch(`/job/delete/${job._id}`);
 
       if (response.status === 200) {
-        console.log('Job deleted successfully');
+        // console.log('Job deleted successfully');
         onDelete(job._id);
       } else {
         console.error('Error deleting job');

@@ -43,7 +43,7 @@ export const useAddJob = () => {
       const response = await api.post('/job/add', { ...formData, postedBy });
 
       // Handle the response if needed
-      console.log('Job posted successfully:', response.data);
+      // console.log('Job posted successfully:', response.data);
 
       // Show a success toast
       toast.success('Job posted successfully');

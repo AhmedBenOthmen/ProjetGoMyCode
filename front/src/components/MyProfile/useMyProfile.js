@@ -26,7 +26,7 @@ export const useMyProfile = () => {
 
     api.put(`/user/update/${userId}`, updateData)
       .then(response => {
-        console.log("Profile updated successfully:", response.data);
+        // console.log("Profile updated successfully:", response.data);
 
         // Update local storage with the new username and email
         const updatedUser = {

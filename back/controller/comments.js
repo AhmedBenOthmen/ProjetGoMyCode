@@ -1,15 +1,24 @@
 const Comment = require("../models/comments");
 
 exports.createComment = async (req, res) => {
-  const { text } = req.body;
+  const { text, user, userName } = req.body;
+  
+  
   try {
-    const newComment = new Comment(req.body);
+    const newComment = new Comment({
+      text,
+      job: req.params.jobId,
+      user,
+      userName
+    });
+    
     await newComment.save();
+
     return res.status(201).json({
       payload: newComment,
     });
   } catch (error) {
-    console.log(error);
+    console.error("error",error);
     return res.status(500).json({
       payload: "Error adding a Comment",
     });
