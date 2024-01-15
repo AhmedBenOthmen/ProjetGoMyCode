@@ -6,7 +6,7 @@ router.post('/add/:id', commentcontrollers.createComment)
 router.put('/update/:id', commentcontrollers.updateComment)
 router.patch('/delete/:id', commentcontrollers.deleteComment)
 router.get('/get/:id', commentcontrollers.getOneComment)
-router.get('/get', commentcontrollers.getAllComments )
+router.get('/getCommentsByJob/:id', commentcontrollers.getAllComments )
 
 
 

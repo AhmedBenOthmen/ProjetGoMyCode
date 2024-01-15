@@ -102,22 +102,21 @@ exports.getOneComment = async (req, res) => {
 };
 
 exports.getAllComments = async (req, res) => {
-  try {
-    const comment = await Comment.find({ isActive: true });
-    let data;
 
-    if (comment && !comment.length) {
-      data = "No Comment Found";
-    } else {
-      data = comment;
-    }
+
+  try {
+    const comments = await Comment.find({job:req.params.id}); // Adjust the query based on your data model
+    console.log("first", comments)
     return res.status(200).json({
-      payload: data,
+      success: true,
+      payload: comments,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      message: "Error IN getAllComments",
+    console.error('Error retrieving comments:', error);
+    return res.status(500).json({
+      success: false,
+      errors: ['Internal Server Error'],
     });
   }
 };
+

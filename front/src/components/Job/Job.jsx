@@ -1,14 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import api from "../../Services/api";
+import Comment from "../Comment/Comment.jsx";
 
 function Job({ job }) {
   const { _id, title, description, company, location, postedBy, createdAt } = job;
   const [commentText, setCommentText] = useState("");
+  const [comments, setComments] = useState([]);
   const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    // Fetch comments when the component mounts
+    const fetchComments = async () => {
+      try {
+        const response = await api.get(`/comment/getCommentsByJob/${_id}`);
+        setComments(response.data.payload);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+        // Handle errors, e.g., show a notification to the user
+      }
+    };
+
+    fetchComments();
+  }, [_id]);
 
   const handleClose = () => {
     setShow(false);
@@ -20,17 +37,19 @@ function Job({ job }) {
   const user = localStorage.getItem("user");
   const userObject = JSON.parse(user);
 
-  const handleComment = async (jobId) => {
-    console.log(jobId)
+  const handleComment = async () => {
     try {
-      const response = await api.post(`/comment/add/${jobId}`, {
+      const response = await api.post(`/comment/add/${_id}`, {
         text: commentText,
         user: userObject._id,
         userName: userObject.username,
-        job: jobId
+        job: _id,
       });
-      console.log(response,'respoonse')
       handleClose();
+      // Refresh comments after adding a new comment
+      const updatedComments = await api.get(`/comment/getCommentsByJob/${_id}`);
+      console.log(updatedComments,'updatedComments')
+      setComments(updatedComments.data.payload);
     } catch (error) {
       console.error("Error adding comment:", error);
       // Handle errors, e.g., show a notification to the user
@@ -40,15 +59,23 @@ function Job({ job }) {
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Body>
-        <Card.Title>{title}</Card.Title>
-        <Card.Text>{description}</Card.Text>
-        <Card.Text>{company}</Card.Text>
-        <Card.Text>{location}</Card.Text>
-        <Card.Text>Posted By: {postedBy}</Card.Text>
-        <Card.Text>Created At: {createdAt}</Card.Text>
+        <Card.Title>Title : {title}</Card.Title>
+        <Card.Text>Description : {description}</Card.Text>
+        <Card.Text>Company : {company}</Card.Text>
+        <Card.Text>Location : {location}</Card.Text>
+        {/* <Card.Text>Posted By: {postedBy}</Card.Text> */}
+        <Card.Text>Created At: {new Date(createdAt).toLocaleString()}</Card.Text>
+
         {/*<Button variant="primary">Apply</Button>*/}
       </Card.Body>
-
+      {comments.map((comment) => (
+          <Comment
+            key={comment._id} // Make sure to use a unique key
+            name={comment.userName}
+            text={comment.text}
+            createdAt={comment.createdAt}
+          />
+        ))}
       {/* Comment Modal */}
       <Button variant="primary" onClick={handleShow}>
         Add Comment
