@@ -21,12 +21,15 @@ function Job({ job }) {
   const userObject = JSON.parse(user);
 
   const handleComment = async (jobId) => {
+    console.log(jobId)
     try {
       const response = await api.post(`/comment/add/${jobId}`, {
         text: commentText,
         user: userObject._id,
         userName: userObject.username,
+        job: jobId
       });
+      console.log(response,'respoonse')
       handleClose();
     } catch (error) {
       console.error("Error adding comment:", error);

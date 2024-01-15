@@ -1,14 +1,16 @@
+const mongoose = require('mongoose');
 const Comment = require("../models/comments");
 
+
 exports.createComment = async (req, res) => {
-  const { text, user, userName } = req.body;
-  
+  const { text, user, userName} = req.body;
+  const { id } = req.params;
   
   try {
     const newComment = new Comment({
       text,
-      job: req.params.jobId,
-      user,
+      job: new mongoose.Types.ObjectId(id),
+      user: new mongoose.Types.ObjectId(user),
       userName
     });
     
