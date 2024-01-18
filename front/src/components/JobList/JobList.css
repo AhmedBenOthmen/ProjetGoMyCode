@@ -1,23 +1,32 @@
 .JobList {
-    display: flex; /* Display jobs horizontally */
-    flex-wrap: wrap; /* Allow wrapping to multiple lines */
-    justify-content: space-between; /* Distribute jobs evenly with spacing */
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: normal;
+  z-index: 999;
+}
+
+.JobList > * {
+  flex-basis: 20%;
+  margin-bottom: 20px;
+}
+
+.job-card {
+  margin-bottom: 20px;
+  height: 100%;
+}
+
+.job-container {
+  height: 100%;
+}
+
+@media (max-width: 768px) {
   .JobList > * {
-    flex-basis: 25%; /* Each job takes up 25% of the width */
-    margin-bottom: 20px; /* Add spacing between rows */
+    flex-basis: 50%;
   }
-  
-  /* Optional: Adjust for smaller screens */
-  @media (max-width: 768px) {
-    .JobList > * {
-      flex-basis: 50%; /* 2 jobs per row on smaller screens */
-    }
+}
+
+@media (max-width: 480px) {
+  .JobList > * {
+    flex-basis: 100%;
   }
-  
-  @media (max-width: 480px) {
-    .JobList > * {
-      flex-basis: 100%; /* 1 job per row on very small screens */
-    }
-  }
+}

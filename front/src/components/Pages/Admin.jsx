@@ -8,7 +8,7 @@ const Admin = () => {
     <div>
         <NavBar/>
         <AdminTab/>
-        <Footer/>
+      
     </div>
   )
 }

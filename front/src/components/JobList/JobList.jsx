@@ -25,14 +25,13 @@ function JobList({ jobs: propJobs, handleRefresh, error, loading }) {
 
   return (
     <div className='JobList'>
-      {propJobs.map((job) => (
-        <Job
-          key={job._id}
-          job={job}
-        />
-      ))}
-    </div>
-  );
+    {propJobs.map((job) => (
+      <div key={job._id} className="job-card">
+        <Job job={job} />
+      </div>
+    ))}
+  </div>
+);
 }
 
 export default JobList;

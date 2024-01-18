@@ -11,7 +11,7 @@ const Home = () => {
     <div>
         <NavBar handleRefresh={handleRefresh}/>
         <JobList jobs = {jobs} loading = {loading} error ={error} handleRefresh={handleRefresh}/>
-        <Footer/>
+      
     </div>
   )
 }

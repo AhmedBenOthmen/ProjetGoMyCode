@@ -8,6 +8,7 @@ import Profile from './components/Pages/Profile.jsx'
 import Register from './components/Pages/Register.jsx';
 import Login from './components/Pages/Login.jsx';
 import Admin from './components/Pages/Admin.jsx';
+import Footer from './components/Footer/Footer.jsx';
 
 function PrivateRoute({ children }) {
  const token = localStorage.getItem('token');
@@ -22,6 +23,7 @@ function PrivateRoute({ children }) {
 function App() {
  return (
     <div className="App">
+      
       <Routes>
         <Route path='/' element={<PrivateRoute><Home/></PrivateRoute>}/>
         <Route path='/myjobs' element={<PrivateRoute><MyJobs/></PrivateRoute>}/>
@@ -31,8 +33,12 @@ function App() {
         <Route path='/admin' element={<Admin/>}/>
         
       </Routes>
+   
       
       <ToastContainer/>
+      <div className='Footer'>
+      <Footer/>
+      </div>
     </div>
  );
 }

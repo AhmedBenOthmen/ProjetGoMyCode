@@ -22,7 +22,7 @@ function NavBar({handleRefresh}) {
           >
             <Nav.Link href="/" style={{ color: '#e65728' }}>Home</Nav.Link>
             <Nav.Link href="/profile" style={{ color: '#e65728' }}>Profile</Nav.Link>
-            <Nav.Link href="/myjobs" style={{ color: '#e65728' }}>My Jobs</Nav.Link>
+            <Nav.Link href="/myjobs" style={{ color: '#e65728' }}>Post A Job</Nav.Link>
             <Nav.Link href="/admin" style={{ color: '#e65728' }}>Admin Tab</Nav.Link>
           </Nav>
         </Navbar.Collapse>

@@ -9,7 +9,7 @@ const Profile = () => {
     <div>
         <NavBar/>
         <MyProfile/>
-        <Footer/>
+     
     </div>
   )
 }

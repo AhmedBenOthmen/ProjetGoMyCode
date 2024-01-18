@@ -5,9 +5,11 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import api from "../../Services/api";
 import Comment from "../Comment/Comment.jsx";
+import './Job.css'
 
 function Job({ job }) {
-  const { _id, title, description, company, location, postedBy, createdAt } = job;
+  const { _id, title, description, company, location, postedBy, createdAt } =
+    job;
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState([]);
   const [show, setShow] = useState(false);
@@ -48,7 +50,7 @@ function Job({ job }) {
       handleClose();
       // Refresh comments after adding a new comment
       const updatedComments = await api.get(`/comment/getCommentsByJob/${_id}`);
-      console.log(updatedComments,'updatedComments')
+      console.log(updatedComments, "updatedComments");
       setComments(updatedComments.data.payload);
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -57,6 +59,7 @@ function Job({ job }) {
   };
 
   return (
+    <div className="job-container">
     <Card style={{ width: "18rem" }}>
       <Card.Body>
         <Card.Title>Title : {title}</Card.Title>
@@ -64,23 +67,33 @@ function Job({ job }) {
         <Card.Text>Company : {company}</Card.Text>
         <Card.Text>Location : {location}</Card.Text>
         {/* <Card.Text>Posted By: {postedBy}</Card.Text> */}
-        <Card.Text>Created At: {new Date(createdAt).toLocaleString()}</Card.Text>
-
+        <Card.Text>
+          Created At: {new Date(createdAt).toLocaleString()}
+        </Card.Text>
         {/*<Button variant="primary">Apply</Button>*/}
       </Card.Body>
-      {comments.map((comment) => (
-          <Comment
-            key={comment._id} // Make sure to use a unique key
-            name={comment.userName}
-            text={comment.text}
-            createdAt={comment.createdAt}
-          />
-        ))}
-      {/* Comment Modal */}
+
+      {/* Comments mapping */}
+
+      {comments.length > 0 && (
+        <div className="job-comments">
+          {comments.map((comment) => (
+            <Comment
+              key={comment._id}
+              name={comment.userName}
+              text={comment.text}
+              createdAt={comment.createdAt}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Add Comment button */}
       <Button variant="primary" onClick={handleShow}>
         Add Comment
       </Button>
 
+      {/* Comment Modal */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Type your comment</Modal.Title>
@@ -113,6 +126,7 @@ function Job({ job }) {
         </Modal.Footer>
       </Modal>
     </Card>
+    </div>
   );
 }
 

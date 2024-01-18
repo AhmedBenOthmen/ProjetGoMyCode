@@ -8,7 +8,7 @@ const MyJobs = () => {
     <div>
         <NavBar/>
         <AddJob/>
-        <Footer/>
+        
     </div>
   )
 }

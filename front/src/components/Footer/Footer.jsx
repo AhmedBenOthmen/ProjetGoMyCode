@@ -8,7 +8,7 @@ const Footer = () => {
         <footer className='AppFooter'>
                     <h1>
 
-                 <p>&copy; 2023 My React App</p>
+                 <p>&copy; 2024 My React App</p>
 
                     </h1>
                 </footer>
