@@ -36,11 +36,7 @@
     transform: rotate(360deg);
   }
 }
-.Footer{
-  width: 100%;
- 
- 
-  position: fixed;
-  bottom: 0;
-  z-index: 1;
+
+.ContentWrapper {
+  padding-bottom: 80px;
 }

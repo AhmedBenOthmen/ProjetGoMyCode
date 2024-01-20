@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import api from "../../Services/api";
 import Comment from "../Comment/Comment.jsx";
-import './Job.css'
+import "./Job.css";
 
 function Job({ job }) {
   const { _id, title, description, company, location, postedBy, createdAt } =
@@ -13,6 +13,9 @@ function Job({ job }) {
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState([]);
   const [show, setShow] = useState(false);
+  const [showComments, setShowComments] = useState("");
+
+  const handleShowComments = () => setShowComments(_id);
 
   useEffect(() => {
     // Fetch comments when the component mounts
@@ -59,73 +62,82 @@ function Job({ job }) {
   };
 
   return (
-    <div className="job-container">
-    <Card style={{ width: "18rem" }}>
-      <Card.Body>
-        <Card.Title>Title : {title}</Card.Title>
-        <Card.Text>Description : {description}</Card.Text>
-        <Card.Text>Company : {company}</Card.Text>
-        <Card.Text>Location : {location}</Card.Text>
-        {/* <Card.Text>Posted By: {postedBy}</Card.Text> */}
-        <Card.Text>
-          Created At: {new Date(createdAt).toLocaleString()}
-        </Card.Text>
-        {/*<Button variant="primary">Apply</Button>*/}
-      </Card.Body>
-
-      {/* Comments mapping */}
-
-      {comments.length > 0 && (
-        <div className="job-comments">
-          {comments.map((comment) => (
-            <Comment
-              key={comment._id}
-              name={comment.userName}
-              text={comment.text}
-              createdAt={comment.createdAt}
-            />
-          ))}
+    <div className="jobCard">
+     
+        <div className="job-container">
+          <span style={{textAlign:"center",fontWeight:"bold",textDecoration:"16px",padding:"5px"}} >Title : {title}</span>
+          <span className="text-comment">Description : {description}</span>
+          <span className="text-comment">Company : {company}</span>
+          <span className="text-comment">Location : {location}</span>
+          {/* <Card.Text>Posted By: {postedBy}</Card.Text> */}
+          <span className="text-date">
+            Created At: {new Date(createdAt).toLocaleString()}
+          </span>
+          {/*<Button variant="primary">Apply</Button>*/}
         </div>
-      )}
 
-      {/* Add Comment button */}
-      <Button variant="primary" onClick={handleShow}>
-        Add Comment
-      </Button>
+        {/* Comments mapping */}
 
-      {/* Comment Modal */}
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Type your comment</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>Comment</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                value={commentText}
-                onChange={(e) => {
-                  setCommentText(e.target.value);
-                }}
+        {(showComments )  && (
+          <div className="job-comments" style={{zIndex:'10', backgroundColor:'#00000049', backdropFilter: 'blur(10px)', width:'100%', height:'100%', position:'fixed', top:"0",left:"0",display:"flex",alignItems:"center",justifyContent:"center"}}>
+            <div style={{backgroundColor:"white", padding:"20px",width:"30%",display:"flex",alignItems:"center",justifyContent:"center",borderRadius:"12px",flexDirection:"column"}}>
+          <button style={{alignSelf:"end",borderRadius:"100%",width:"30px",height:"30px",border:"1px",backgroundColor:"white",display:"flex",alignItems:"center",justifyContent:"center"}} onClick={()=>setShowComments("")}> x</button>
+            {comments.map((comment) => (
+              <Comment 
+                key={comment._id}
+                name={comment.userName}
+                text={comment.text}
+                createdAt={comment.createdAt}
               />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
+            ))}
+            </div>
+          </div>
+        )}
+      <div className="button-container">
+        {/* show Comment button */}
+        {comments.length > 0  && (
+          <Button variant="primary" onClick={handleShowComments}>
+            {showComments ? "Hide Comments" : "Show Comments"}
           </Button>
-          <Button variant="primary" onClick={() => handleComment(job._id)}>
-            Save
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </Card>
+        )}
+        {/* Add Comment button */}
+        <Button variant="primary" onClick={handleShow}>
+          Add Comment
+        </Button>
+        </div>
+        {/* Comment Modal */}
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Type your comment</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlTextarea1"
+              >
+                <Form.Label>Comment</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  value={commentText}
+                  onChange={(e) => {
+                    setCommentText(e.target.value);
+                  }}
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={() => handleComment(job._id)}>
+              Save
+            </Button>
+          </Modal.Footer>
+        </Modal>
+  
     </div>
   );
 }

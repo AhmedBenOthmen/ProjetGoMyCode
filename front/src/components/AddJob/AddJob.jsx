@@ -10,7 +10,7 @@ const AddJob = () => {
   const { formData, loading, handleChange, handleSubmit } = useAddJob();
 
   return (
-    <div className="AddJob">
+    <div className="AddJob" style={{height:"100vh",padding:"50px"}}>
       <h3>Post the job you want to be done</h3>
 
       <form onSubmit={handleSubmit}>

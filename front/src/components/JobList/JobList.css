@@ -1,32 +1,13 @@
 .JobList {
   display: flex;
   flex-wrap: wrap;
-  justify-content: normal;
-  z-index: 999;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+
 }
 
-.JobList > * {
-  flex-basis: 20%;
-  margin-bottom: 20px;
-}
 
-.job-card {
-  margin-bottom: 20px;
-  height: 100%;
-}
 
-.job-container {
-  height: 100%;
-}
 
-@media (max-width: 768px) {
-  .JobList > * {
-    flex-basis: 50%;
-  }
-}
-
-@media (max-width: 480px) {
-  .JobList > * {
-    flex-basis: 100%;
-  }
-}

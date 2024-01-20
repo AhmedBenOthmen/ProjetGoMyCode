@@ -9,8 +9,8 @@ const Comment = ({ name, text, createdAt }) => {
   const formattedCreatedAt = createdAtDate.toLocaleString();
 
   return (
-    <div className="comment">
-      <Card className="mb-3">
+    <div className="comment"  >
+      <Card className="mb-3" style={{width:'300px'}}>
         <Card.Body className="d-flex flex-column">
           <div className="d-flex justify-content-around">
             <Card.Title>{name}:</Card.Title>

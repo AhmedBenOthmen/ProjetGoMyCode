@@ -106,7 +106,6 @@ exports.getAllComments = async (req, res) => {
 
   try {
     const comments = await Comment.find({job:req.params.id}); // Adjust the query based on your data model
-    console.log("first", comments)
     return res.status(200).json({
       success: true,
       payload: comments,

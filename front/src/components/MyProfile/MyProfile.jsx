@@ -11,7 +11,7 @@ const MyProfile = () => {
   const { name, email, setName, setEmail, handleUpdate } = useMyProfile();
 
   return (
-    <div className="myProfile">
+    <div className="myProfile" style={{height:"100vh",padding:"50px"}}>
       <InputGroup className="mb-3 updateName">
         <InputGroup.Text id="inputGroup-sizing-default">Name</InputGroup.Text>
         <Form.Control
