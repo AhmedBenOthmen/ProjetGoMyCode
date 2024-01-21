@@ -71,7 +71,7 @@ function Job({ job }) {
           <span className="text-comment">Location : {location}</span>
           {/* <Card.Text>Posted By: {postedBy}</Card.Text> */}
           <span className="text-date">
-            Created At: {new Date(createdAt).toLocaleString()}
+          Created At: {new Date(createdAt).toLocaleString()}
           </span>
           {/*<Button variant="primary">Apply</Button>*/}
         </div>

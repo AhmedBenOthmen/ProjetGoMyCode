@@ -52,7 +52,14 @@ const Register = () => {
   }
 
   return (
-    <>
+    <div style={{
+      backgroundColor: "#6b69693f",
+      height: "91vh",
+      gap: "10px",
+      display: "flex",
+      flexDirection: "column",
+    }}>
+    
       <section className="heading">
         <h1>Register</h1>
         <p>Please Create an account</p>
@@ -99,7 +106,8 @@ const Register = () => {
         </form>
       </section>
       <Link to="/login">Login</Link>
-    </>
+    
+    </div>
   );
 };
 

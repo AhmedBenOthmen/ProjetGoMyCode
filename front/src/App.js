@@ -10,7 +10,6 @@ import Register from "./components/Pages/Register.jsx";
 import Login from "./components/Pages/Login.jsx";
 import Admin from "./components/Pages/Admin.jsx";
 import Footer from "./components/Footer/Footer.jsx";
-import NavBar from "./components/NavBar/NavBar.jsx";
 
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -21,9 +20,22 @@ function PrivateRoute({ children }) {
 
   return children;
 }
+
+const AdminRoute = ({ children }) => {
+  const token = localStorage.getItem("token");
+  const userString = localStorage.getItem("user");
+  const user = userString ? JSON.parse(userString) : null;
+
+  if (!token || !user || !user.isAdmin) {
+    return <Navigate to="/login" />;
+  }
+
+  return children;
+};
+
 const PublicContainer = () => {
   return (
-    <div>
+    <div >
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -31,56 +43,64 @@ const PublicContainer = () => {
     </div>
   );
 };
+
 const PrivateContainer = () => {
   return (
-    <div  style={{  backgroundColor: "#6b69693f" ,height:"100%", gap:"10px", display:"flex", flexDirection:"column"}}>
-      <div className="ContentWrapper" >
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <Home />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/myjobs"
-          element={
-            <PrivateRoute>
-              <MyJobs />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/admin"
-          element={
-            <PrivateRoute>
-              <Admin />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
+    <div
+      style={{
+        backgroundColor: "#6b69693f",
+        height: "100%",
+        gap: "10px",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <div className="ContentWrapper">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/myjobs"
+            element={
+              <PrivateRoute>
+                <MyJobs />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <Admin />
+              </AdminRoute>
+            }
+          />
+        </Routes>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 };
-//Admin route to do
+
 function App() {
   return (
     <div className="App">
-      <PublicContainer/>
-      <PrivateContainer/>
-
+      <PublicContainer />
+      <PrivateContainer />
       <ToastContainer />
     </div>
   );

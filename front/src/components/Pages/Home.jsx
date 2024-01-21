@@ -1,7 +1,6 @@
 import React from 'react'
 import NavBar from '../NavBar/NavBar.jsx'
 import JobList from '../JobList/JobList.jsx'
-import Footer from '../Footer/Footer.jsx'
 import useJobList from '../JobList/useJobList.js'
 
 const Home = () => {

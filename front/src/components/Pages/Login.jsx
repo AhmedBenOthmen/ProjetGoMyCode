@@ -50,7 +50,14 @@ const Login = () => {
     return <Spinner/>
   }
   return (
-    <>
+    <div style={{
+      backgroundColor: "#6b69693f",
+      height: "91vh",
+      gap: "10px",
+      display: "flex",
+      flexDirection: "column",
+    }}>
+    
       <section className="heading">
         <h1>Login</h1>
         <p>Please Login</p>
@@ -87,7 +94,8 @@ const Login = () => {
         </form>
       </section>
       <Link to="/register">Register</Link>
-    </>
+    
+    </div>
   );
 };
 
