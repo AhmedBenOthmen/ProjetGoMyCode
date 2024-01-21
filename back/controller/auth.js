@@ -27,8 +27,8 @@ exports.register = async (req, res) => {
       httpOnly: true,
       secure: true,
       maxAge: 24 * 60 * 60 * 1000,
-    }); // maxAge en milisecondes = 1 Day
-    res.setHeader('Authorization', token); // maxAge en millisecondes = 1h
+    });
+    res.setHeader('Authorization', token);
     return res.status(201).json({
       payload: user,
       token,
@@ -52,69 +52,31 @@ exports.login = async (req, res) => {
       });
     }
 
-    const passwordMAtch = await bcrypt.compare(password, user.password);
-    if (!passwordMAtch) {
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
       return res.status(401).json({
         payload: "Email Or Password incorrect",
       });
     }
     const generateAuth = AuthHelper.generateTokens(user._id) 
     let token = generateAuth.accessToken
-    console.log('accessToken' ,token)
-    const verifAccesToken = AuthHelper.verifyAccessToken(token)
-    console.log('verifAccesToken' ,verifAccesToken)
 
-    if (verifAccesToken) {
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-        maxAge: 3600000,
-      });
-      res.cookie("refreshToken", token, {
-        httpOnly: true,
-        secure: true,
-        maxAge: 3600000,
-      });
-      res.setHeader('Authorization', token);
-      return res.status(200).json({
-        payload: user,
-        token,
-      });
-    } else {
-      token = generateAuth.refreshToken
-      const verifRefreshToken = AuthHelper.verifRefreshToken(token)
-      if (verifRefreshToken) {
-        res.cookie("token", token, {
-          httpOnly: true,
-          secure: true,
-          maxAge: 3600000,
-        });
-        res.setHeader('Authorization', token); // maxAge en millisecondes = 1h
-        return res.status(200).json({
-          payload: user,
-          token,
-        });
-      } else {
-        const regenerRefreshToken = AuthHelper.generateTokens(user._id)
-        token =regenerRefreshToken.accessToken;
-        res.cookie("token", token, {
-          httpOnly: true,
-          secure: true,
-          maxAge: 3600000,
-        });
-        res.setHeader('Authorization', token); // maxAge en millisecondes = 1h
-        return res.status(200).json({
-          payload: user,
-          token,
-        });
-      }
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 3600000,
+    });
+    res.setHeader('Authorization', token);
+    return res.status(200).json({
+      payload: user,
+      token,
+    });
 
-    }
- 
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({
-      payload: "Error loggin a user",
+      payload: "Error logging in user",
+      error: error.message,
     });
   }
 };
